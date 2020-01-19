@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import { Link } from '@reach/router'
 
 
-const Post = ({ id = 2 }) => {
+const FuncPost = ({ id = 2 }) => {
 
     return (
         <Fragment>
@@ -63,4 +63,4 @@ const Post = ({ id = 2 }) => {
     );
 }
 
-export default Post;
+export default FuncPost;

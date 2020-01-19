@@ -1,10 +1,11 @@
-import React,{Fragment} from 'react';
-import Post from './post'
+import React, { Fragment } from 'react';
+//import FuncPost from './func-post'
+import ClassPost from './class-post'
 
 const Index = () => {
     return (
         <Fragment>
-            <Post/>
+            <ClassPost />
         </Fragment>
     );
 }
