@@ -50,17 +50,32 @@ class ClassPost extends Component {
                                         </h2>
 
                                         <div className="post-details">
-                                            <div className="post-cat">
-                                                <Link to={`/post/${post.id}`} href="#">Travel</Link>
-                                            </div>
-                                            <Link to={`/post/${post.id}`} className="post-date"><span>
-                                                <Moment format="D MMM YYYY" withTitle>
-                                                    {post.date}
-                                                </Moment>
-                                            </span></Link>
+
+                                            {
+                                                post.cats.map(cat => {
+                                                    return (
+                                                        <div className="post-cat">
+                                                            <Link to={`/post/${post.id}`}>{cat.name}</Link>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+
+
+                                            <Link to={`/post/${post.id}`} className="post-date">
+                                                <span>
+                                                    <Moment format="D MMM YYYY" withTitle>
+                                                        {post.date}
+                                                    </Moment>
+                                                </span>
+                                            </Link>
+
                                             <div className="post-details-child">
-                                                <a href="#" className="post-views">15 views</a>
-                                                <a href="#" className="post-comments">03 Comments</a>
+                                            
+                                                <Link to={`/post/${post.id}`} className="post-views">15 views</Link>
+
+                                                <Link to={`/post/${post.id}`} className="post-comments">03 Comments</Link>
+
                                                 <div className="post-share-icon">
                                                     <span>SHARE</span>
                                                     <ul>
