@@ -1,17 +1,16 @@
 import React, { Fragment } from 'react';
 import Routes from '../router'
+import AppProvider from './provider'
 
-/* import FCounter from '../features/counter'
-<FCounter/> */
 
 
 function App() {
   return (
-    <Fragment>
+    <AppProvider>
 
       <Routes />
 
-    </Fragment>
+    </AppProvider>
   );
 }
 
