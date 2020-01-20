@@ -30,16 +30,23 @@ class ClassPost extends Component {
                 })
                 .catch(err => this.setState({ loading: false, error: err }));
         })
-        console.log('i am componentDidMount')
     }
-
+    
+    createMarkup = ( data ) => ({
+		__html: data
+	});
 
     render() {
         const { loading, posts, error } = this.state;
+
+            console.log('loading:',loading)
+            console.log('posts length:',posts.length)
+            console.log('error:',error)
         return (
             <Fragment>
+             { error && <div className="alert alert-danger" dangerouslySetInnerHTML={ this.createMarkup( error ) }/> }
                 {
-                    posts.length ? (
+                    posts.length > 0 && (
                         posts.map(post => {
                             console.log(post)
                             return (
@@ -61,7 +68,6 @@ class ClassPost extends Component {
                                                 })
                                             }
 
-
                                             <Link to={`/post/${post.id}`} className="post-date">
                                                 <span>
                                                     <Moment format="D MMM YYYY" withTitle>
@@ -71,7 +77,7 @@ class ClassPost extends Component {
                                             </Link>
 
                                             <div className="post-details-child">
-                                            
+
                                                 <Link to={`/post/${post.id}`} className="post-views">15 views</Link>
 
                                                 <Link to={`/post/${post.id}`} className="post-comments">03 Comments</Link>
@@ -108,7 +114,7 @@ class ClassPost extends Component {
                                 </article>
                             )
                         })
-                    ) : ''
+                    )
                 }
             </Fragment>
         );
