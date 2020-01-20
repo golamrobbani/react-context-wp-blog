@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import CSinglePost from '../../../components/single-post'
-const FSinglePost = () => {
+const FSinglePost = (props) => {
     return (
         <Fragment>
 
-            <CSinglePost />
+            <CSinglePost id={props.id} />
 
         </Fragment>
     );

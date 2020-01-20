@@ -1,9 +1,9 @@
 import React,{Fragment} from 'react';
 import FSinglePost from './view/single-post'
-const Index = () => {
+const Index = (props) => {
     return (
         <Fragment>
-            <FSinglePost/>
+            <FSinglePost id={props.id}/>
         </Fragment>
     );
 }

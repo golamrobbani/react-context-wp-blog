@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-const SinglePost = () => {
+const FuncSinglePost = () => {
     return (
         <Fragment>
 
@@ -83,4 +83,4 @@ const SinglePost = () => {
     );
 }
 
-export default SinglePost;
+export default FuncSinglePost;

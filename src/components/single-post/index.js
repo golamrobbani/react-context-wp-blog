@@ -1,10 +1,13 @@
-import React,{Fragment} from 'react';
-import SinglePost from './single-post'
+import React, { Fragment } from 'react';
+//import FuncSinglePost from './func-single-post'
 
-const Index = () => {
+import ClassSinglePost from './class-single-post'
+
+const Index = (props) => {
+    console.log('components props:',props)
     return (
         <Fragment>
-            <SinglePost/>
+            <ClassSinglePost id={props.id} />
         </Fragment>
     );
 }

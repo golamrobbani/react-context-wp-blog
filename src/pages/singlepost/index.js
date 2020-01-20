@@ -8,11 +8,12 @@ import AuthorBox from '../../components/author-box'
 import Comments from '../../components/comment'
 import CommentForm from '../../components/comment-form'
 
-const Index = () => {
+const Index = (props) => {
+console.log('pages post props:',props)
     return (
         <Fragment>
             <Layout>
-                <SinglePost />
+                <SinglePost id={props.id} />
                 <Pagination/>
                 <RelatedPost/>
                 <AuthorBox/>

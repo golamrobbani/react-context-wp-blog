@@ -1,12 +1,16 @@
 import React, { Component, Fragment } from 'react';
+
+//same import post and single post and functionalty. 
+//so need optamized next step
+//it is laearning step
+
 import Axios from 'axios'
 import ClientConfig from '../../app/client-config'
 import { Link } from '@reach/router'
 import RenderHTML from 'react-render-html';
-
 import Moment from 'react-moment'
-
 const WPSiteURL = ClientConfig.siteUrl
+
 
 class ClassPost extends Component {
 
@@ -48,16 +52,16 @@ class ClassPost extends Component {
                 {
                     posts.length > 0 && (
                         posts.map(post => {
-                            console.log(post)
+                            //console.log(post)
                             return (
-                                <article className="post">
+                                <article key={post.id} className="post">
                                     <div className="post-header">
                                         <h2 className="title">
                                             <Link to={`/post/${post.id}`}>{post.title.rendered}</Link>
                                         </h2>
 
                                         <div className="post-details">
-                                            {
+                                            {post.cats.length > 0 &&
                                                 post.cats.map(cat => {
                                                     return (
                                                         <div className="post-cat">
@@ -77,10 +81,14 @@ class ClassPost extends Component {
 
                                             <div className="post-details-child">
 
-                                                <Link to={`/post/${post.id}`} className="post-views">15 views</Link>
+                                                <Link to={`/post/${post.id}`} className="post-views">
+                                                    {post.acf.post_view_count === null ?
+                                                        `00 views` : post.acf.post_view_count < 10 ?
+                                                            `0${post.acf.post_view_count} views` : `${post.acf.post_view_count} views`}
+                                                </Link>
 
                                                 <Link to={`/post/${post.id}`} className="post-comments">
-                                                    {post.t_comment_num != 0 && post.t_comment_num < 10 ?
+                                                    {post.t_comment_num < 10 ?
                                                         `0${post.t_comment_num} Comments` : `${post.t_comment_num} Comments`}
                                                 </Link>
 
