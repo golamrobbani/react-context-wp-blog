@@ -31,20 +31,20 @@ class ClassPost extends Component {
                 .catch(err => this.setState({ loading: false, error: err }));
         })
     }
-    
-    createMarkup = ( data ) => ({
-		__html: data
-	});
+
+    createMarkup = (data) => ({
+        __html: data
+    });
+
 
     render() {
         const { loading, posts, error } = this.state;
-
-            console.log('loading:',loading)
-            console.log('posts length:',posts.length)
-            console.log('error:',error)
+        /* console.log('loading:',loading)
+        console.log('posts length:',posts.length)
+        console.log('error:',error) */
         return (
             <Fragment>
-             { error && <div className="alert alert-danger" dangerouslySetInnerHTML={ this.createMarkup( error ) }/> }
+                {error && <div className="alert alert-danger" dangerouslySetInnerHTML={this.createMarkup(error)} />}
                 {
                     posts.length > 0 && (
                         posts.map(post => {
@@ -57,7 +57,6 @@ class ClassPost extends Component {
                                         </h2>
 
                                         <div className="post-details">
-
                                             {
                                                 post.cats.map(cat => {
                                                     return (
@@ -80,7 +79,10 @@ class ClassPost extends Component {
 
                                                 <Link to={`/post/${post.id}`} className="post-views">15 views</Link>
 
-                                                <Link to={`/post/${post.id}`} className="post-comments">03 Comments</Link>
+                                                <Link to={`/post/${post.id}`} className="post-comments">
+                                                    {post.t_comment_num != 0 && post.t_comment_num < 10 ?
+                                                        `0${post.t_comment_num} Comments` : `${post.t_comment_num} Comments`}
+                                                </Link>
 
                                                 <div className="post-share-icon">
                                                     <span>SHARE</span>

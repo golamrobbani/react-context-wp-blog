@@ -1,5 +1,5 @@
 const clientConfig = {
-	siteUrl: 'https://api.jobsolutionbd.com'
+	siteUrl: 'http://react-with-wp.test'
 };
 
 export default clientConfig;
