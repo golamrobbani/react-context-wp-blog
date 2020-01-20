@@ -29,16 +29,16 @@ class ClassSinglePost extends Component {
         //this is not good working it is removing context api or redux project
         //console.log('class component post id:',this.props.id)
 
-        Axios.post( WPSiteURL + '/wp-json/jwt-auth/v1/token/', {
+        Axios.post(WPSiteURL + '/wp-json/jwt-auth/v1/token/', {
             username: 'admin', password: 'admin123'
         }).then(response => {
-            console.log('Autho response',response)
+            console.log('Autho response', response)
             if (response.status === 200) {
                 const data = response.data;
-                
+
                 localStorage.setItem('token', data.token);
             }
-        }).catch(error => console.log('Autho Error',error));
+        }).catch(error => console.log('Autho Error', error));
 
 
 
@@ -102,17 +102,11 @@ class ClassSinglePost extends Component {
     }
 
 
-
-
     render() {
         const { loading, post, error } = this.state;
-
-
-
         const viewCount = this.state.view_count
 
         console.log('view count:', viewCount)
-
         console.log('single post', post)
         console.log('single post error', error)
 
@@ -199,13 +193,11 @@ class ClassSinglePost extends Component {
 
 
                             <div className="post-author">
-                                Writed by  <a href="#">Kendy</a>
+                                Writed by <Link to={`/post/${post.id}`}>{post.author_name}</Link>
                             </div>
 
 
                         </div>
-
-
                     </article>
                 )}
 
