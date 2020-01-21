@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
-import AuthorBox from './author-box'
+import FuncAuthorBox from './func-author-box'
 
-const Index = () => {
+
+const Index = (props) => {
     return (
         <Fragment>
-            <AuthorBox />
+            <FuncAuthorBox id={props.id} />
         </Fragment>
     );
 }

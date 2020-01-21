@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
-import Comment from './comment'
+import FuncComment from './func-comment'
+//import ClassComment from './class-comment'
 
-const Index = () => {
+const Index = (props) => {
     return (
         <Fragment>
-            <Comment />
+            <FuncComment postID={props.postID} />
         </Fragment>
     );
 }

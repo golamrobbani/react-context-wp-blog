@@ -32,9 +32,9 @@ const MainLayout = (props) => {
                     {/* start-right-content */}
                     <div class="col-md-9 col-md-offset-3">
                         <div class="posts">
-                            <div class="posts-inner">
+                           
                                 {props.children}
-                            </div>
+                           
                         </div>
                     </div>
                     {/* end-right-content */}

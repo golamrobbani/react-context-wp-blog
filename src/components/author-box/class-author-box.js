@@ -1,6 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment,useState,useEffect } from 'react';
 
-const AuthorBox = () => {
+import Axios from 'axios'
+import ClientConfig from '../../app/client-config'
+import { Link } from '@reach/router'
+import RenderHTML from 'react-render-html';
+import Moment from 'react-moment'
+const WPSiteURL = ClientConfig.siteUrl
+
+
+const ClassAuthorBox = () => {
+
+    
+
+
+
     return (
         <Fragment>
 
@@ -33,4 +46,4 @@ const AuthorBox = () => {
     );
 }
 
-export default AuthorBox;
+export default ClassAuthorBox;

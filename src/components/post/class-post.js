@@ -48,6 +48,7 @@ class ClassPost extends Component {
         console.log('error:',error) */
         return (
             <Fragment>
+            <div class="posts-inner">
                 {error && <div className="alert alert-danger" dangerouslySetInnerHTML={this.createMarkup(error)} />}
                 {
                     posts.length > 0 && (
@@ -126,6 +127,7 @@ class ClassPost extends Component {
                         })
                     )
                 }
+                </div>
             </Fragment>
         );
     }

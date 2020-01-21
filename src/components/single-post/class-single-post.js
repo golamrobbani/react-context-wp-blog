@@ -9,7 +9,13 @@ import ClientConfig from '../../app/client-config'
 import { Link } from '@reach/router'
 import RenderHTML from 'react-render-html';
 import Moment from 'react-moment'
+import Pagination from '../pagination'
+import RelatedPost from '../related-post'
+import AuthorBox from '../author-box'
+import Comments from '../comment'
+import CommentForm from '../comment-form'
 const WPSiteURL = ClientConfig.siteUrl
+
 
 class ClassSinglePost extends Component {
 
@@ -29,16 +35,16 @@ class ClassSinglePost extends Component {
         //this is not good working it is removing context api or redux project
         //console.log('class component post id:',this.props.id)
 
-        Axios.post(WPSiteURL + '/wp-json/jwt-auth/v1/token/', {
-            username: 'admin', password: 'admin123'
-        }).then(response => {
-            console.log('Autho response', response)
-            if (response.status === 200) {
-                const data = response.data;
+        // Axios.post(WPSiteURL + '/wp-json/jwt-auth/v1/token/', {
+        //     username: 'admin', password: 'admin123'
+        // }).then(response => {
+        //     console.log('Autho response', response)
+        //     if (response.status === 200) {
+        //         const data = response.data;
 
-                localStorage.setItem('token', data.token);
-            }
-        }).catch(error => console.log('Autho Error', error));
+        //         localStorage.setItem('token', data.token);
+        //     }
+        // }).catch(error => console.log('Autho Error', error));
 
 
 
@@ -116,90 +122,102 @@ class ClassSinglePost extends Component {
                 {error && <div className="alert alert-danger" dangerouslySetInnerHTML={this.createMarkup(error)} />}
 
                 {Object.keys(post).length > 0 && (
+                    <Fragment>
+                        <div class="posts-inner">
+                            <article className="post">
+                                <div className="post-header">
+                                    <h2 className="title"><span>{post.title.rendered}</span></h2>
 
-                    <article className="post">
-                        <div className="post-header">
-                            <h2 className="title"><span>{post.title.rendered}</span></h2>
+                                    <div className="post-details">
+                                        {post.cats.length > 0 &&
+                                            post.cats.map(cat => {
+                                                return (
+                                                    <div className="post-cat">
+                                                        <Link to={`/post/${post.id}`}>{cat.name}</Link>
+                                                    </div>
+                                                )
+                                            })}
+                                        <Link to={`/post/${post.id}`} className="post-date">
+                                            <span>
+                                                <Moment format="D MMM YYYY" withTitle>
+                                                    {post.date}
+                                                </Moment>
+                                            </span>
+                                        </Link>
 
-                            <div className="post-details">
-                                {post.cats.length > 0 &&
-                                    post.cats.map(cat => {
-                                        return (
-                                            <div className="post-cat">
-                                                <Link to={`/post/${post.id}`}>{cat.name}</Link>
+                                        <div className="post-details-child">
+
+                                            <Link to={`/post/${post.id}`} className="post-views">
+                                                {post.acf.post_view_count === null ?
+                                                    `00 views` : post.acf.post_view_count < 10 ?
+                                                        `0${post.acf.post_view_count} views` : `${post.acf.post_view_count} views`}
+                                            </Link>
+
+                                            <Link to={`/post/${post.id}`} className="post-comments">
+                                                {post.t_comment_num != 0 && post.t_comment_num < 10 ?
+                                                    `0${post.t_comment_num} Comments` : `${post.t_comment_num} Comments`}
+                                            </Link>
+
+                                            <div className="post-share-icon">
+                                                <span>SHARE</span>
+                                                <ul>
+                                                    <li><a href="#"><i className="fa fa-facebook"></i><span>Facebook</span></a></li>
+                                                    <li><a href="#"><i className="fa fa-google"></i><span>Google Plus</span></a></li>
+                                                    <li><a href="#"><i className="fa fa-twitter"></i><span>Twitter</span></a></li>
+                                                    <li><a href="#"><i className="fa fa-behance"></i><span>Behance</span></a></li>
+                                                    <li><a href="#"><i className="fa fa-dribbble"></i><span>Dribbble</span></a></li>
+                                                </ul>
                                             </div>
-                                        )
-                                    })}
-                                <Link to={`/post/${post.id}`} className="post-date">
-                                    <span>
-                                        <Moment format="D MMM YYYY" withTitle>
-                                            {post.date}
-                                        </Moment>
-                                    </span>
-                                </Link>
-
-                                <div className="post-details-child">
-
-                                    <Link to={`/post/${post.id}`} className="post-views">
-                                        {post.acf.post_view_count === null ?
-                                            `00 views` : post.acf.post_view_count < 10 ?
-                                                `0${post.acf.post_view_count} views` : `${post.acf.post_view_count} views`}
-                                    </Link>
-
-                                    <Link to={`/post/${post.id}`} className="post-comments">
-                                        {post.t_comment_num != 0 && post.t_comment_num < 10 ?
-                                            `0${post.t_comment_num} Comments` : `${post.t_comment_num} Comments`}
-                                    </Link>
-
-                                    <div className="post-share-icon">
-                                        <span>SHARE</span>
-                                        <ul>
-                                            <li><a href="#"><i className="fa fa-facebook"></i><span>Facebook</span></a></li>
-                                            <li><a href="#"><i className="fa fa-google"></i><span>Google Plus</span></a></li>
-                                            <li><a href="#"><i className="fa fa-twitter"></i><span>Twitter</span></a></li>
-                                            <li><a href="#"><i className="fa fa-behance"></i><span>Behance</span></a></li>
-                                            <li><a href="#"><i className="fa fa-dribbble"></i><span>Dribbble</span></a></li>
-                                        </ul>
+                                        </div>
                                     </div>
+
                                 </div>
-                            </div>
-
-                        </div>
-                        <div className="post-media">
-                            <img src={post.f_image_full} alt="Post" />
-                        </div>
-                        <div className="post-content">
-
-
-                            <div className="the-excerpt">
-                                {RenderHTML(post.content.rendered)}
-                            </div>
-
-
-                            {post.tags && (
-                                <div className="post-tags">
-                                    <strong>Tags: </strong>
-                                    <ul>
-                                        {post.tags.map(tag => {
-                                            return (
-                                                <li>
-                                                    <Link to={`/post/${post.id}`}>{tag.name}</Link>
-                                                </li>
-                                            )
-                                        })}
-                                    </ul>
+                                <div className="post-media">
+                                    <img src={post.f_image_full} alt="Post" />
                                 </div>
-                            )}
+                                <div className="post-content">
 
 
-                            <div className="post-author">
-                                Writed by <Link to={`/post/${post.id}`}>{post.author_name}</Link>
-                            </div>
+                                    <div className="the-excerpt">
+                                        {RenderHTML(post.content.rendered)}
+                                    </div>
 
 
+                                    {post.tags && (
+                                        <div className="post-tags">
+                                            <strong>Tags: </strong>
+                                            <ul>
+                                                {post.tags.map(tag => {
+                                                    return (
+                                                        <li>
+                                                            <Link to={`/post/${post.id}`}>{tag.name}</Link>
+                                                        </li>
+                                                    )
+                                                })}
+                                            </ul>
+                                        </div>
+                                    )}
+
+
+                                    <div className="post-author">
+                                        Writed by <Link to={`/post/${post.id}`}>{post.author_name}</Link>
+                                    </div>
+
+
+                                </div>
+                            </article>
                         </div>
-                    </article>
+
+                        <Pagination />
+                        <RelatedPost />
+                        <AuthorBox id={post.author} />
+                        <Comments postID={post.id}/>
+                        <CommentForm/>
+
+                    </Fragment>
                 )}
+
+
 
             </Fragment>
         );
