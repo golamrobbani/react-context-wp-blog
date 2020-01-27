@@ -133,7 +133,7 @@ class ClassSinglePost extends Component {
                                             post.cats.map(cat => {
                                                 return (
                                                     <div className="post-cat">
-                                                        <Link to={`/post/${post.id}`}>{cat.name}</Link>
+                                                        <Link to={`/category/${cat.term_id}`}>{cat.name}</Link>
                                                     </div>
                                                 )
                                             })}
@@ -190,7 +190,7 @@ class ClassSinglePost extends Component {
                                                 {post.tags.map(tag => {
                                                     return (
                                                         <li>
-                                                            <Link to={`/post/${post.id}`}>{tag.name}</Link>
+                                                            <Link to={`/tag/${tag.id}`}>{tag.name}</Link>
                                                         </li>
                                                     )
                                                 })}

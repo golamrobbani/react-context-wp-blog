@@ -1,53 +1,46 @@
-import React, { Component, Fragment } from 'react';
-
-//same import post and single post and functionalty. 
-//so need optamized next step
-//it is laearning step
+import React, { Fragment, useState, useEffect } from 'react';
+import { Link,Redirect } from '@reach/router'
 
 import Axios from 'axios'
 import ClientConfig from '../../app/client-config'
-import { Link } from '@reach/router'
 import RenderHTML from 'react-render-html';
 import Moment from 'react-moment'
+
 const WPSiteURL = ClientConfig.siteUrl
 
+const FuncCategoryPost = (props) => {
 
-class ClassPost extends Component {
 
-    state = {
-        loading: false,
-        posts: [],
-        error: ''
-    };
+    const [error, setError] = useState('');
+    const [posts, setPosts] = useState([]);
 
-    componentDidMount() {
-        this.setState({ loading: true }, () => {
-            Axios.get(`${WPSiteURL}/wp-json/wp/v2/posts/`)
-                .then(res => {
-                    if (200 === res.status) {
-                        if (res.data.length) {
-                            this.setState({ loading: false, posts: res.data });
-                        } else {
-                            this.setState({ loading: false, error: 'No Posts Found' });
-                        }
-                    }
-                })
-                .catch(err => this.setState({ loading: false, error: err }));
-        })
+
+    useEffect(() => {
+        
+        Axios.get(`${WPSiteURL}/wp-json/wp/v2/posts?categories=${props.category_name}`)
+            .then((r) => {
+                console.log('useEffectResponseCategoryPostData', r.data)
+                setPosts(r.data)
+                setError('')
+            })
+            .catch((e) => {
+                setError('Server Error')
+            })
+
+        console.log('props.category_name 4334343yuyuyu:', props.category_name)
+        
+
+    }, []);
+
+
+    const myreload=(e,id)=>{
+      //console.log('dsfasdfasdf',e)
+      //window.location.reload();
+     return <Redirect to={`/categories/${id}`} />
     }
 
-    createMarkup = (data) => ({
-        __html: data
-    });
-
-
-    render() {
-        const { loading, posts, error } = this.state;
-        /* console.log('loading:',loading)
-        console.log('posts length:',posts.length)
-        console.log('error:',error) */
-        return (
-            <Fragment>
+    return (
+        <Fragment>
             <div className="posts-inner">
                 {error && <div className="alert alert-danger" dangerouslySetInnerHTML={this.createMarkup(error)} />}
                 {
@@ -66,7 +59,7 @@ class ClassPost extends Component {
                                                 post.cats.map(cat => {
                                                     return (
                                                         <div key={cat.id} className="post-cat">
-                                                            <Link to={`/category/${cat.term_id}`}>{cat.name}</Link>
+                                                            <Link onClick={e=>myreload(e,cat.id)}  to={`/category/${cat.term_id}`}>{cat.name}</Link>
                                                         </div>
                                                     )
                                                 })
@@ -127,9 +120,9 @@ class ClassPost extends Component {
                         })
                     )
                 }
-                </div>
-            </Fragment>
-        );
-    }
+            </div>
+        </Fragment>
+    );
 }
-export default ClassPost;
+
+export default FuncCategoryPost;
